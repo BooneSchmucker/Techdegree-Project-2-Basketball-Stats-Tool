@@ -13,15 +13,15 @@ warriors = []
 
 def clean_data():
     for player in players_copy:
-        clean_height = player["height"].split(" ")
-        player["height"] = int(clean_height[0])
+        clean_height = int(player["height"].split(" ")[0])
+        clean_guardians = player["guardians"].split(" and ")
         if player["experience"] == "YES":
             player["experience"] = True
             experienced_players.append(player)
         elif player["experience"] == "NO":
             player["experience"] = False
             inexperienced_players.append(player)
-    return experienced_players, inexperienced_players
+    return experienced_players, inexperienced_players, clean_height, clean_guardians
 
 
 def balance_teams():
@@ -37,17 +37,29 @@ def balance_teams():
 def display_stats(team):
     total_players = len(team)
     players_names = []
+    guardians_names = [] #still displying "and" between guardians
+    experienced_count = 0
+    inexperienced_count = 0
     for name in team:
         players_names.append(name["name"])
-    print("-"*26)
-    print("\nTotal Players: {}\n".format(total_players))
-    print("-"*8, "Players:", "-"*8)
+    for guardians in team:
+        guardians_names.append(guardians["guardians"])
+    for player in team:
+        if player["experience"] == True:
+            experienced_count += 1
+        else:
+            inexperienced_count += 1
+    print("Total Players: {}".format(total_players))
+    print("Experienced Players: {}".format(experienced_count))
+    print("Rookies: {}".format(inexperienced_count))
+    print("\n**Players**")
     print(", ".join(players_names))
-
+    print("\n**Guardians**")
+    print(", ".join(guardians_names), "\n")
 
 def console():
     print("Boones Basketball Stats Tool\n")
-    print("-"*11, "MENU", "-"*11)
+    print("-"*8, "MENU", "-"*8)
     print("\nChoose your destiny:\n")
     while True:
         try:
@@ -62,7 +74,7 @@ def console():
         else:
             if prompt1 == 1:
                 print("\n")
-                print("-"*11, "TEAMS", "-"*11)
+                print("-"*8, "TEAMS", "-"*8)
                 print("\n1 - Panthers")
                 print("2 - Bandits")
                 print("3 - Warriors\n")
@@ -75,13 +87,13 @@ def console():
                     print ("\nNot a valid selection; Please, try again\n")
                 else:
                     if prompt2 == 1:
-                        print("\nPanthers\n")
+                        print("\n**Panthers**")
                         display_stats(panthers)
                     elif prompt2 == 2:
-                        print("\nBandits\n")
+                        print("\n**Bandits**")
                         display_stats(bandits)
                     elif prompt2 == 3:
-                        print("\nWarriors\n")
+                        print("\n**Warriors**")
                         display_stats(warriors)
             elif prompt1 == 2:
                 break
