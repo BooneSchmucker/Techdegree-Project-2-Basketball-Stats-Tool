@@ -13,15 +13,16 @@ warriors = []
 
 def clean_data():
     for player in players_copy:
-        height = int(player["height"].split(" ")[0])
-        guardians = player["guardians"].split(" and ")
+        #player["height"].split()
+        player["height"] = int(player["height"][0:2])
+        player["guardians"] = (", ".join(player["guardians"].split(" and ")))
         if player["experience"] == "YES":
             player["experience"] = True
             experienced_players.append(player)
         elif player["experience"] == "NO":
             player["experience"] = False
             inexperienced_players.append(player)
-    return player
+    return players_copy
 
 
 def balance_teams():
@@ -36,23 +37,23 @@ def balance_teams():
 def display_stats(team):
     total_players = len(team)
     players_names = []
-    guardians_names = [] # still displying "and" between guardians
+    guardians_names = []
     experienced_count = 0
     inexperienced_count = 0
-    team_heights = []    # not functioning
-    average_height = sum(team_heights) / len(team)
+    team_height = 0   # not functioning
     for player in team:
         players_names.append(player["name"])
         guardians_names.append(player["guardians"])
-        team_heights.append(player["height"])
+        team_height += player["height"]
         if player["experience"] == True:
             experienced_count += 1
         else:
             inexperienced_count += 1
+    average_height = round(team_height / len(team))
     print("Total Players: {}".format(total_players))
     print("Experienced Players: {}".format(experienced_count))
     print("Rookies: {}".format(inexperienced_count))
-    print("Average Height: {}".format(average_height))
+    print("Average Height: {} inches".format(average_height))
     print("\n**Players**")
     print(", ".join(players_names))
     print("\n**Guardians**")
