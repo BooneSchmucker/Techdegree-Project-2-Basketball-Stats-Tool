@@ -13,7 +13,6 @@ warriors = []
 
 def clean_data():
     for player in players_copy:
-        #player["height"].split()
         player["height"] = int(player["height"][0:2])
         player["guardians"] = (", ".join(player["guardians"].split(" and ")))
         if player["experience"] == "YES":
@@ -27,11 +26,11 @@ def clean_data():
 
 def balance_teams():
     teams = [panthers, bandits, warriors]
-    num_teams = len(teams)
+    number_teams = len(teams)
     for num in range(len(experienced_players)):
-        teams[num % num_teams].append(experienced_players[num])
+        teams[num % number_teams].append(experienced_players[num])
     for num in range(len(inexperienced_players)):
-        teams[num % num_teams].append(inexperienced_players[num])
+        teams[num % number_teams].append(inexperienced_players[num])
 
 
 def display_stats(team):
@@ -40,7 +39,7 @@ def display_stats(team):
     guardians_names = []
     experienced_count = 0
     inexperienced_count = 0
-    team_height = 0   # not functioning
+    team_height = 0
     for player in team:
         players_names.append(player["name"])
         guardians_names.append(player["guardians"])
@@ -70,10 +69,10 @@ def console():
             print("2 - Exit the program\n")
             prompt1 = int(input("Enter 1 or 2 > "))
             if prompt1 < 1 or prompt1 > 2:
-                print("\nNot a valid selection; Please, enter 1 or 2.\n")
+                print("\nNot a valid selection. Please, enter 1 or 2.\n")
                 continue
         except ValueError:
-            print("\nNot a valid selection; Please, enter 1 or 2.\n")
+            print("\nNot a valid selection. Please, enter 1 or 2.\n")
         else:
             if prompt1 == 1:
                 print("\n")
@@ -84,10 +83,10 @@ def console():
                 try:
                     prompt2 = int(input("Select team > "))
                     if prompt2 < 1 or prompt2 > 3:
-                        print("\nNot a valid selection; Please, try again\n")
+                        print("\nNot a valid selection. Please, try again\n")
                         continue
                 except ValueError:
-                    print ("\nNot a valid selection; Please, try again\n")
+                    print ("\nNot a valid selection. Please, try again\n")
                 else:
                     if prompt2 == 1:
                         print("\n**Panthers**")
