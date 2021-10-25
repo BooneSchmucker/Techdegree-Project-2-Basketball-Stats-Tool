@@ -106,5 +106,5 @@ if __name__ == "__main__":
     clean_data()
     balance_teams()
     console()
-    display_data()
+    display_stats()
     
